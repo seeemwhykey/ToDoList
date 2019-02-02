@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../_models/product');
 const mongoose = require('mongoose');
+const checkAuth= require('../_middleware/check-auth')
 
 //GET requests to /products
 router.get('/', (req, res, next) => {
@@ -63,7 +64,7 @@ router.get('/:productId', (req, res, next) => {
 
 
 //POST request to /products
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
    const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name
@@ -95,7 +96,7 @@ router.post('/', (req, res, next) => {
 
 
 //UPDATE requests to /products
-router.patch('/:productId', (req, res, next) => {
+router.patch('/:productId', checkAuth, (req, res, next) => {
   const id = req.params.productId;
   const updateOps = {};
   for (const ops of req.body) {
@@ -122,7 +123,7 @@ router.patch('/:productId', (req, res, next) => {
 
 
 //DELETE requests to /products
-router.delete('/:productId', (req, res, next) => {
+router.delete('/:productId', checkAuth, (req, res, next) => {
   const id = req.params.productId;
   Product.remove({_id: id})
   .exec()
