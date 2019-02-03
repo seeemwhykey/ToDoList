@@ -20,7 +20,7 @@ export class DataService {
   public getToDo(): Observable<ToDo[]> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json ; charset=UTF-8',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'Authorization': 'Bearer ' + this.cookieService.get('token')
       })
     };
@@ -29,9 +29,10 @@ export class DataService {
 
 // POST
 public postToDo(object: ToDo): Observable<ToDo> {
+  console.log(this.cookieService.get('token'));
   const httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json ; charset=UTF-8',
+      'Content-Type': 'application/x-www-form-urlencoded ; charset=UTF-8',
       'Authorization': 'Bearer ' + this.cookieService.get('token')
     })
   };
@@ -70,8 +71,10 @@ public deleteToDo(object: ToDo): Observable<ToDo> {
     .subscribe(res => {
       console.log(res);
       this.cookieService.put('token', res.token, {
-        domain: 'localhost', expires: '1h'
+        domain: 'localhost', expires: '24h'
       });
     });
   }
 }
+
+

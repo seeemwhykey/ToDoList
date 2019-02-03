@@ -61,9 +61,11 @@ exports.user_login = (req, res, next) => {
     }
     bcrypt.compare(req.body.password, user[0].password, (err, result) => {
       if (err) {
+        console.log(err);
         return res.status(401).json({
           message: 'Authentifizierung fehlgeschlagen'
         });
+
       }
       if (result) {
         const token = jwt.sign(
@@ -73,7 +75,7 @@ exports.user_login = (req, res, next) => {
           },
           config.JWT_KEY,
           {
-            expiresIn: "1h"
+            expiresIn: "24h"
           }
         );
         return res.status(200).json({

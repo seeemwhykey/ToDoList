@@ -5,14 +5,14 @@ const mongoose = require('mongoose');
 //GET ALL PRODUCTS
 exports.products_get_all = (req, res, next) => {
   Product.find()
-  .select('name _id')
+  .select('label _id')
   .exec()
   .then(docs => {
     const response = {
       count: docs.length,
       products: docs.map(doc => {
         return {
-          name: doc.name,
+          label: doc.label,
           _id: doc._id,
           request: {
             types: 'GET',
