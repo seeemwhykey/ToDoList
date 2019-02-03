@@ -26,6 +26,7 @@ export class PageListComponent implements OnInit {
     this.ToDoShow = true;
     this.ToDoDoneShow = false;
     this.$todos = [];
+    this.$todosdone = [];
     this.loadData();
 
     this._dragulaService.createGroup('todos', {
@@ -54,7 +55,7 @@ export class PageListComponent implements OnInit {
         this.$todos.forEach((todo: ToDo) => {
             position += 1;
             todo.position = position;
-            this._dataService.putToDo(todo).subscribe((data: ToDo) => {
+            this._dataService.patchToDo(todo).subscribe((data: ToDo) => {
               console.log(`%cSUC: ${data.label} wurde neu positioniert.`, `color: green; font-size: 12px;`);
             }, error => {
                 console.log(`%cERROR: ${error.message}`, `color: red; font-size: 12px;`);
@@ -64,23 +65,24 @@ export class PageListComponent implements OnInit {
 
 
   public loadData(): void {
-    this.$todosdone = [] ;
-    this.$todos = [];
-    this._dataService.getToDo().subscribe((data: ToDo[]) => {
-        data.forEach((toDo: ToDo) => {
-            if (toDo.status === true) {
-                this.$todosdone.push(toDo);
-            } else {
-              this.$todos.push(toDo);
-            }
+      this.$todosdone = [];
+      this.$todos = [];
+      this._dataService.getToDo().subscribe((data: ToDo[]) => {
+        data.products.forEach((toDo: ToDo) => {
+          if (toDo.status === true) {
+            this.$todosdone.push(toDo);
+          } else {
+            this.$todos.push(toDo);
+          }
         });
         this.$todos.sort((obj1, obj2) => {
-            return obj1.position - obj2.position;
+          return obj1.position - obj2.position;
         });
-    }, error => {
-      console.log(`%cERROR: ${error.message}`, `color: red; font-size: 12px;`);
-    });
+      }, error => {
+          console.log(`%cERROR: ${error.message}`, `color: red; font-size: 12px;`);
+      });
   }
+
 
   public create(event: ToDo): void {
     event.position = this.$todos.length + 1;
@@ -118,13 +120,13 @@ export class PageListComponent implements OnInit {
       console.log(`%c"${event.label}-Event" wurde getriggert. `, `color:green;`);
       if (event.object.status) {
           this.$todosdone.forEach((toDo: ToDo) => {
-            if (toDo.id === event.object.id) {
+            if (toDo._id === event.object._id) {
               toDo.label = event.object.label;
             }
           });
       } else {
         this.$todosdone.forEach((toDo: ToDo) => {
-            if (toDo.id === event.object.id) {
+            if (toDo._id === event.object._id) {
               toDo.label = event.object.label;
             }
         });

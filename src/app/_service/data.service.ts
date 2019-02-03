@@ -2,58 +2,76 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ToDo } from '../_interface/todo';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private serverUrl = 'http://localhost:3000';
+  private serverUrl = 'http://localhost:8000';
 
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private cookieService: CookieService) {
 
    }
 
   // GET
   public getToDo(): Observable<ToDo[]> {
     const httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json'
-        })
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json ; charset=UTF-8',
+        'Authorization': 'Bearer ' + this.cookieService.get('token')
+      })
     };
-    return this._http.get<ToDo[]>(`${this.serverUrl}/todos`, httpOptions);
+    return this._http.get<ToDo[]>(`${this.serverUrl}/products`, httpOptions);
 }
 
 // POST
 public postToDo(object: ToDo): Observable<ToDo> {
   const httpOptions = {
-      headers: new HttpHeaders ({
-          'Content-Type': 'application/json'
-      })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json ; charset=UTF-8',
+      'Authorization': 'Bearer ' + this.cookieService.get('token')
+    })
   };
-  return this._http.post<ToDo>(`${this.serverUrl}/todos`, object, httpOptions);
+  return this._http.post<ToDo>(`${this.serverUrl}/products`, object, httpOptions);
+}
+
+
+
+// PATCH
+public patchToDo(object: ToDo): Observable<ToDo> {
+  console.log(object);
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json ; charset=UTF-8',
+      'Authorization': 'Bearer ' + this.cookieService.get('token')
+    })
+  };
+  return this._http.patch<ToDo>(`${this.serverUrl}/products/${object._id}`, object, httpOptions);
 }
 
 // DELETE
 public deleteToDo(object: ToDo): Observable<ToDo> {
   const httpOptions = {
-      headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-      })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json ; charset=UTF-8',
+      'Authorization': 'Bearer ' + this.cookieService.get('token')
+    })
   };
-  return this._http.delete<ToDo>(`${this.serverUrl}/todos/${object.id}`, httpOptions);
+  return this._http.delete<ToDo>(`${this.serverUrl}/products/${object._id}`, httpOptions);
 }
 
 
-// PUT
-public putToDo(object: ToDo): Observable<ToDo> {
-  const httpOptions = {
-      headers: new HttpHeaders ({
-          'Content-Type': 'application/json'
-      })
-  };
-  return this._http.put<ToDo>(`${this.serverUrl}/todos/${object.id}`, object, httpOptions);
-}
-
+  // LOGIN
+  login(loginData) {
+    this._http.post<any>(`${this.serverUrl}/user/login`, loginData)
+    .subscribe(res => {
+      console.log(res);
+      this.cookieService.put('token', res.token, {
+        domain: 'localhost', expires: '1h'
+      });
+    });
+  }
 }
