@@ -36,7 +36,7 @@ exports.products_get_all = (req, res, next) => {
 exports.products_create_product = (req, res, next) => {
   const product = new Product({
    _id: new mongoose.Types.ObjectId(),
-   name: req.body.name
+   label: req.body.label
  });
  product
  .save()
@@ -45,7 +45,7 @@ exports.products_create_product = (req, res, next) => {
    res.status(201).json({
      message: 'Created product successfully',
      createdProduct: {
-       name: result.name,
+       label: result.label,
        _id: result._id,
        request: {
          types: 'GET',
@@ -67,7 +67,7 @@ exports.products_create_product = (req, res, next) => {
 exports.products_get_product_by_id = (req, res, next) => {
   const id = req.params.productId;
   Product.findById(id)
-  .select('name _id')
+  .select('label _id')
   .exec()
   .then(doc => {
     console.log(doc);
@@ -128,7 +128,7 @@ exports.products_delete_product = (req, res, next) => {
       message: 'Product deleted',
       request: 'POST',
       url: 'http://localhost:8000/products',
-      body: {name: 'String'}
+      body: {label: 'String'}
     });
   })
   .catch(err => {

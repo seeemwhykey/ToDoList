@@ -1,6 +1,21 @@
-<div class="login-container" style="background-image: url('assets/images/bg.jpg')">
-  <h1>Shopping Lit</h1>
-  <input class="login-field" [(ngModel)]="email">
-  <input class="login-field" [(ngModel)]="password">
-  <button (click)="doLogin()"></button>
+<div class="login-container">
+  <h1>You're Shopping Lit</h1>
+  <h2>Login to your shared shopping list</h2>
+  <input class="login-field" [(ngModel)]="email" placeholder="Email" type="email">
+  <input class="login-field" [(ngModel)]="password" placeholder="Passwort" type="password"><span toggle="#password-field" class="fa fa-eye toggle-password"></span>
+  <button (click)="doLogin()"><p>Log me in</p></button>
 </div>
+
+
+<script>
+  $(".toggle-password").click(function() {
+
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
+</script>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../../_service/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-template-header',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TemplateHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
+
+  doLogout() {
+    this.router.navigate(['user/login']);
+  }
+
 
 }

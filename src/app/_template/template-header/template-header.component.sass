@@ -1,5 +1,8 @@
 @import '../../../sass/var'
 
+*
+  font-family: $font1
+
 header
   border-top: $cube*0,5 solid $prime
   padding: $cube*1
@@ -10,9 +13,20 @@ header
     line-height: 1.1em
     font-weight: bold
     display: flex
-    margin: 10px 20% auto 20%
+    flex-wrap: nowrap
+    margin: 2% 26% 1% 26%
     font-size: $cube*5.5
     text-transform: uppercase
-    span
-      color: $prime
-      margin-left: 20px
+
+  button
+    margin-right: 2%
+    margin-top: -4%
+    top: 10px
+    float: right
+    font-size: 14px
+    color: $white
+    background-color: $light-grey
+    outline: none
+    border-radius: 3px
+    border-color: $light-grey
+
