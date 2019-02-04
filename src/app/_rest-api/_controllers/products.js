@@ -65,8 +65,8 @@ exports.products_create_product = (req, res, next) => {
 
 //GET PRODUCT BY ID
 exports.products_get_product_by_id = (req, res, next) => {
-  const id = req.params.productId;
-  Product.findById(id)
+  const _id = req.params.productId;
+  Product.findById(_id)
   .select('label _id')
   .exec()
   .then(doc => {
@@ -93,19 +93,19 @@ exports.products_get_product_by_id = (req, res, next) => {
 
 //UPDATE PRODUCT
 exports.products_update_product = (req, res, next) => {
-  const id = req.params.productId;
+  const _id = req.params.productId;
   const updateOps = {};
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
   }
-  Product.update({_id: id}, {$set: updateOps})
+  Product.update({_id: _id}, {$set: updateOps})
   .exec()
   .then(result => {
     res.status(200).json({
       message: 'Product updated',
       request: {
         type: 'GET',
-        url: 'http://localhost:8000/products/' + id
+        url: 'http://localhost:8000/products/' + _id
       }
     });
   })
@@ -120,8 +120,8 @@ exports.products_update_product = (req, res, next) => {
 
 //DELETE PRODUCT
 exports.products_delete_product = (req, res, next) => {
-  const id = req.params.productId;
-  Product.remove({_id: id})
+  const _id = req.params.productId;
+  Product.remove({_id: _id})
   .exec()
   .then(result => {
     res.status(200).json({
