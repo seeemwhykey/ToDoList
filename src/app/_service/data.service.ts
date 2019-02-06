@@ -65,8 +65,8 @@ public deleteToDo(object: ToDo): Observable<ToDo> {
 
 
   // LOGIN
-  login(loginData) {
-    this._http.post<any>(`${this.serverUrl}/login`, loginData)
+  public login(loginData) {
+    this._http.post<any>(`${this.serverUrl}/user/login`, loginData)
     .subscribe(res => {
       console.log(res);
       this.cookieService.put('token', res.token, {
