@@ -35,7 +35,6 @@ public postToDo(object: ToDo): Observable<ToDo> {
       'Authorization': 'Bearer ' + this.cookieService.get('token')
     })
   };
-  console.log(object);
   return this._http.post<ToDo>(`${this.serverUrl}/products`, object, httpOptions);
 }
 

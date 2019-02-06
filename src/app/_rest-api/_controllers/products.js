@@ -90,10 +90,9 @@ exports.products_get_product_by_id = (req, res, next) => {
 //UPDATE PRODUCT
 exports.products_update_product = (req, res, next) => {
   const _id = req.params.productId;
-  const updateOps = {};
 
-
-  Product.update({_id: _id}, {$set: req.body})
+  Product
+  .update({_id: _id}, {$set: req.body})
   .exec()
   .then(result => {
     res.status(200).json({
@@ -110,6 +109,7 @@ exports.products_update_product = (req, res, next) => {
     error: err
     });
   });
+  console.log(Product);
 }
 
 

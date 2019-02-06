@@ -1,13 +1,14 @@
 <div class="todo" [class.done] ="toDo$.status">
     <div class="todo-content">
         <div class="handle"></div>
-          <i class="fa fa-ellipsis-v" id="fa-drag"></i>
+          <i *ngIf="!toDo$.status" (click)="changeCheck($event)" class="fa fa-ellipsis-v" id="fa-drag"></i>
+          <i *ngIf="toDo$.status" (click)="changeCheck($event)" class="fa fa-heart" id="fa-hide"></i>
         <div class="todo-content-check" id="fa-check">
             <i *ngIf="!toDo$.status" (click)="changeCheck($event)" class="fa fa-square-o"></i>
             <i *ngIf="toDo$.status" (click)="changeCheck($event)" class="fa fa-check-square-o"></i>
         </div>
         <div class="todo-content-titel">
-            <input type="text" [(ngModel)]="toDo$.label" placeholder="Write here" (blur)="changeLabel($event)">
+            <input type="text" [(ngModel)]="toDo$.label" placeholder="Hier schreiben" (blur)="changeLabel($event)">
         </div>
     </div>
     <div class="delete" (click)="deleteToDo($event)">

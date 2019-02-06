@@ -61,6 +61,15 @@ export class PageListComponent implements OnInit {
                 console.log(`%cERROR: ${error.message}`, `color: red; font-size: 12px;`);
             });
         });
+        this.$todosdone.forEach((tododone: ToDo) => {
+          position += 1;
+          tododone.position = position;
+          this._dataService.patchToDo(tododone).subscribe((data: ToDo) => {
+            console.log(`%cSUC: ${data.label} wurde neu positioniert.`, `color: green; font-size: 12px;`);
+          }, error => {
+              console.log(`%cERROR: ${error.message}`, `color: red; font-size: 12px;`);
+          });
+      });
 }
 
 
@@ -101,10 +110,12 @@ export class PageListComponent implements OnInit {
       if (!event.object.status) {
           this.$todosdone.splice(this.$todosdone.indexOf(event.object), 1);
           this.$todos.push(event.object);
+
       } else {
         this.$todos.splice(this.$todos.indexOf(event.object), 1);
         this.$todosdone.push(event.object);
       }
+      this.position();
     }
 
     if ('delete' === event.label) {
@@ -133,5 +144,6 @@ export class PageListComponent implements OnInit {
       }
     }
     console.log(this.$todos);
+    console.log(this.$todosdone);
   }
 }
