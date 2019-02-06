@@ -15,7 +15,7 @@ export class TemplateHeaderComponent implements OnInit {
   }
 
   doLogout() {
-    this.router.navigate(['user/login']);
+    this.router.navigate(['login']);
   }
 
 

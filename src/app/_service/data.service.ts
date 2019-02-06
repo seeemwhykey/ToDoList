@@ -20,7 +20,7 @@ export class DataService {
   public getToDo(): Observable<ToDo[]> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        // 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'Authorization': 'Bearer ' + this.cookieService.get('token')
       })
     };
@@ -29,13 +29,13 @@ export class DataService {
 
 // POST
 public postToDo(object: ToDo): Observable<ToDo> {
-  console.log(this.cookieService.get('token'));
   const httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded ; charset=UTF-8',
+      // 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       'Authorization': 'Bearer ' + this.cookieService.get('token')
     })
   };
+  console.log(object);
   return this._http.post<ToDo>(`${this.serverUrl}/products`, object, httpOptions);
 }
 
@@ -43,7 +43,6 @@ public postToDo(object: ToDo): Observable<ToDo> {
 
 // PATCH
 public patchToDo(object: ToDo): Observable<ToDo> {
-  console.log(object);
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json ; charset=UTF-8',
@@ -67,7 +66,7 @@ public deleteToDo(object: ToDo): Observable<ToDo> {
 
   // LOGIN
   login(loginData) {
-    this._http.post<any>(`${this.serverUrl}/user/login`, loginData)
+    this._http.post<any>(`${this.serverUrl}/login`, loginData)
     .subscribe(res => {
       console.log(res);
       this.cookieService.put('token', res.token, {

@@ -6,7 +6,7 @@ import { PageListComponent } from './page-list/page-list.component';
 
 const routes: Routes = [
   {
-    path: 'user/login',
+    path: 'login',
     component: LoginComponent
   },
   {

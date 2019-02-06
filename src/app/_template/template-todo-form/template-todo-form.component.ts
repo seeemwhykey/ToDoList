@@ -15,7 +15,7 @@ export class TemplateTodoFormComponent implements OnInit {
   constructor() {
     this.toDo$ = {
         _id: undefined,
-        label: undefined,
+        label: '',
         status: false,
         position: undefined
     };
@@ -28,7 +28,7 @@ export class TemplateTodoFormComponent implements OnInit {
         this.ping.emit(this.toDo$);
         this.toDo$ = {
           _id: undefined,
-          label: undefined,
+          label: '',
           status: false,
           position: undefined
       };

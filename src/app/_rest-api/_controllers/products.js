@@ -41,17 +41,13 @@ exports.products_create_product = (req, res, next) => {
  product
  .save()
  .then(result => {
-   console.log(result);
    res.status(201).json({
-     message: 'Created product successfully',
-     createdProduct: {
        label: result.label,
        _id: result._id,
        request: {
-         types: 'GET',
+         types: 'POST',
          url: 'http://localhost:8000/products/' + result._id
        }
-     }
    });
  })
  .catch(err => {
@@ -95,16 +91,15 @@ exports.products_get_product_by_id = (req, res, next) => {
 exports.products_update_product = (req, res, next) => {
   const _id = req.params.productId;
   const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value;
-  }
-  Product.update({_id: _id}, {$set: updateOps})
+
+
+  Product.update({_id: _id}, {$set: req.body})
   .exec()
   .then(result => {
     res.status(200).json({
       message: 'Product updated',
       request: {
-        type: 'GET',
+        type: 'PATCH',
         url: 'http://localhost:8000/products/' + _id
       }
     });
