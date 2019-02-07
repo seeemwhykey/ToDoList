@@ -21,7 +21,7 @@ export class TemplateTodoComponent implements OnInit {
 
     // Checkbox
     public changeCheck(event?: any): void {
-        this.toDo$.status = !this.toDo$.status;
+        this.toDo$.checked = !this.toDo$.checked;
         this._dataService.patchToDo(this.toDo$).subscribe((data: ToDo) => {
           const eventObject: EventPing = {
             label: 'check',

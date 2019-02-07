@@ -48,6 +48,9 @@ public patchToDo(object: ToDo): Observable<ToDo> {
       'Authorization': 'Bearer ' + this.cookieService.get('token')
     })
   };
+  console.log(object._id);
+  console.log(object.position); // HIER IST UNDEFINED
+
   return this._http.patch<ToDo>(`${this.serverUrl}/products/${object._id}`, object, httpOptions);
 }
 
@@ -59,6 +62,7 @@ public deleteToDo(object: ToDo): Observable<ToDo> {
       'Authorization': 'Bearer ' + this.cookieService.get('token')
     })
   };
+
   return this._http.delete<ToDo>(`${this.serverUrl}/products/${object._id}`, httpOptions);
 }
 

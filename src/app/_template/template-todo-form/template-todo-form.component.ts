@@ -16,7 +16,7 @@ export class TemplateTodoFormComponent implements OnInit {
     this.toDo$ = {
         _id: undefined,
         label: '',
-        status: false,
+        checked: false,
         position: undefined
     };
 }
@@ -29,7 +29,7 @@ export class TemplateTodoFormComponent implements OnInit {
         this.toDo$ = {
           _id: undefined,
           label: '',
-          status: false,
+          checked: false,
           position: undefined
       };
   }

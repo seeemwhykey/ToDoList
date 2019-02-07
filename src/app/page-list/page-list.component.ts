@@ -55,8 +55,10 @@ export class PageListComponent implements OnInit {
         this.$todos.forEach((todo: ToDo) => {
             position += 1;
             todo.position = position;
-            this._dataService.patchToDo(todo).subscribe((data: ToDo) => {
-              console.log(`%cSUC: ${data.label} wurde neu positioniert.`, `color: green; font-size: 12px;`);
+            this._dataService.patchToDo(todo).subscribe((data) => {
+              console.log(data);
+
+              console.log(`%cSUC: ${data} wurde neu positioniert.`, `color: green; font-size: 12px;`);
             }, error => {
                 console.log(`%cERROR: ${error.message}`, `color: red; font-size: 12px;`);
             });
@@ -78,7 +80,7 @@ export class PageListComponent implements OnInit {
       this.$todos = [];
       this._dataService.getToDo().subscribe((data: ToDo[]) => {
         data.products.forEach((toDo: ToDo) => {
-          if (toDo.status === true) {
+          if (toDo.checked === true) {
             this.$todosdone.push(toDo);
           } else {
             this.$todos.push(toDo);
@@ -107,7 +109,7 @@ export class PageListComponent implements OnInit {
   public update(event: EventPing): void {
     if ('check' === event.label) {
       console.log(`%c"${event.label}-Event" wurde getriggert. `, `color:green;`);
-      if (!event.object.status) {
+      if (!event.object.checked) {
           this.$todosdone.splice(this.$todosdone.indexOf(event.object), 1);
           this.$todos.push(event.object);
 
@@ -120,7 +122,7 @@ export class PageListComponent implements OnInit {
 
     if ('delete' === event.label) {
       console.log(`%c"${event.label}-Event" wurde getriggert. `, `color:green;`);
-      if (event.object.status) {
+      if (event.object.checked) {
           this.$todosdone.splice(this.$todosdone.indexOf(event.object), 1);
       } else {
         this.$todos.splice(this.$todos.indexOf(event.object), 1);
@@ -129,7 +131,7 @@ export class PageListComponent implements OnInit {
 
     if ('label' === event.label) {
       console.log(`%c"${event.label}-Event" wurde getriggert. `, `color:green;`);
-      if (event.object.status) {
+      if (event.object.checked) {
           this.$todosdone.forEach((toDo: ToDo) => {
             if (toDo._id === event.object._id) {
               toDo.label = event.object.label;

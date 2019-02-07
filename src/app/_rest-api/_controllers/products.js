@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 //GET ALL PRODUCTS
 exports.products_get_all = (req, res, next) => {
   Product.find()
-  .select('label _id')
+  .select('label _id position checked')
   .exec()
   .then(docs => {
     const response = {
@@ -14,6 +14,8 @@ exports.products_get_all = (req, res, next) => {
         return {
           label: doc.label,
           _id: doc._id,
+          position: doc.position,
+          checked: doc.checked,
           request: {
             types: 'GET',
             url: 'http://localhost:8000/products/' + doc._id
@@ -36,7 +38,9 @@ exports.products_get_all = (req, res, next) => {
 exports.products_create_product = (req, res, next) => {
   const product = new Product({
    _id: new mongoose.Types.ObjectId(),
-   label: req.body.label
+   label: req.body.label,
+   position: req.body.position,
+   checked: req.body.checked
  });
  product
  .save()
@@ -63,10 +67,9 @@ exports.products_create_product = (req, res, next) => {
 exports.products_get_product_by_id = (req, res, next) => {
   const _id = req.params.productId;
   Product.findById(_id)
-  .select('label _id')
+  .select('label _id position checked')
   .exec()
   .then(doc => {
-    console.log(doc);
     if (doc) {
       res.status(200).json(doc);
     } else {
@@ -90,7 +93,6 @@ exports.products_get_product_by_id = (req, res, next) => {
 //UPDATE PRODUCT
 exports.products_update_product = (req, res, next) => {
   const _id = req.params.productId;
-
   Product
   .update({_id: _id}, {$set: req.body})
   .exec()
@@ -109,7 +111,6 @@ exports.products_update_product = (req, res, next) => {
     error: err
     });
   });
-  console.log(Product);
 }
 
 
