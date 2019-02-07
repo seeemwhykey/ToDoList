@@ -20,4 +20,4 @@ RUN npm run build:prod
 EXPOSE 8080
 
 # starting point when the image is executed
-CMD ["http-server", "./dist/ToDoList/", "-p 8080"]
+CMD ["http-server", "./dist/Zweikaufsliste/", "-p 8080"]
