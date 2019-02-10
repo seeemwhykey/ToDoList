@@ -1,0 +1,18 @@
+version: "2"
+services:
+  zweikaufsliste-mongo:
+    image: mongo
+  zweikaufsliste-backend:
+    build: ./src/app/_rest-api/
+    image: zweikaufsliste-backend
+    environment:
+      MONGO_URL: mongodb://zweikaufsliste-mongo:27017/myapp
+    ports:
+      - 8000:8000
+    depends_on:
+      - zweikaufsliste-mongo
+  zweikaufsliste:
+    build: .
+    image: zweikaufsliste
+    ports:
+      - 8080:8080

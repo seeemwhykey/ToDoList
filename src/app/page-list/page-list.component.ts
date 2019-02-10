@@ -78,7 +78,7 @@ export class PageListComponent implements OnInit {
   public loadData(): void {
       this.$todosdone = [];
       this.$todos = [];
-      this._dataService.getToDo().subscribe((data: ToDo[]) => {
+      this._dataService.getToDo().subscribe((data: any) => {
         data.products.forEach((toDo: ToDo) => {
           if (toDo.checked === true) {
             this.$todosdone.push(toDo);

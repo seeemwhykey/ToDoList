@@ -2,16 +2,21 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const init = require('./_controllers/init');
 
 const productRoutes = require('./_routes/products');
 const userRoutes = require('./_routes/user');
 var cors = require('cors');
 
+const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/myapp';
+
 mongoose.connect(
-  'mongodb://localhost:27017/myapp', {useNewUrlParser: true}
+  mongoUrl, {useNewUrlParser: true}
 );
 
 mongoose.Promise = global.Promise;
+
+init.init();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
